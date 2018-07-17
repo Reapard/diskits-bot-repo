@@ -17,8 +17,8 @@ bot_client.on('message', message => {
   if(!msg.startsWith(prefix)) return;
   if(sender.bot) return;
 
-  let content = msg.slice(prefix.length).split(" ");
-  //let arguments = content.slice(1);
+  let args = msg.slice(prefix.length).split(" ");
+  //let arguments = args.slice(1);
   //console.log('message detected');
 
     if(msg.startsWith(prefix + 'ping')) {
@@ -27,8 +27,8 @@ bot_client.on('message', message => {
     } else
 
     if(msg.startsWith(prefix + 'roll')) {
-      console.log(content[1]);
-      let dicetower = content[1].split("d");
+      console.log(args[1]);
+      let dicetower = args[1].split("d");
       if(!isNaN(dicetower[0]) && !isNaN(dicetower[1])){
         var total = 0;
         var resultString = '';
