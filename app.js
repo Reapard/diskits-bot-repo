@@ -6,6 +6,25 @@ var prefix = '!';
 
 var bot_channel;
 
+function roll(diceNumber, diceSize, channel){
+	if(!isNaN(diceNumber) && !isNaN(diceSize)){
+        var total = 0;
+        var resultString = '';
+
+        for (var i = 0; i < diceNumber; i++) {
+          let roll = Math.floor(Math.random() * diceSize) + 1;
+          total += roll;
+          resultString += roll.toString() + ' ';
+        }
+        channel.send('Checking your luck...');
+        channel.send('```Rolled: ' + resultString + '```');
+        channel.send('```Total: ' + total + '```');
+      } else {
+        console.log('Format error');
+        channel.send('Format error');
+      }
+}
+
 bot_client.on('ready', () => {
     console.log('A wild Kitsune appeared!\nTry to catch her.');
 });
@@ -28,23 +47,13 @@ bot_client.on('message', message => {
 
     if(msg.startsWith(prefix + 'roll')) {
       console.log(args[1]);
-      let dicetower = args[1].split("d");
-      if(!isNaN(dicetower[0]) && !isNaN(dicetower[1])){
-        var total = 0;
-        var resultString = '';
-        for (var i = 0; i < dicetower[0]; i++) {
-          let roll = Math.floor(Math.random() * dicetower[1]) + 1;
-          total += roll;
-          resultString += roll.toString() + ' ';
-          //console.log(typeof(dicetower[0]));
-          //console.log(typeof(dicetower[1]));
-        }
-        message.channel.send('Checking your luck...');
-        message.channel.send('```Rolled: ' + resultString + '```');
-        message.channel.send('```Total: ' + total + '```');
+      if(typeof args[1] !== "undefined"){
+      	let dicetower = args[1].split("d");
+      	roll(dicetower[0], dicetower[1], message.channel);
       } else {
-        console.log('Format error');
+      	roll(3, 6, message.channel);
       }
+      
     } else
 
     if(msg.startsWith(prefix + 'help')) {
